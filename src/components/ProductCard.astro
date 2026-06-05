@@ -1,0 +1,24 @@
+---
+import type { Product } from '../data/products';
+
+interface Props {
+  product: Product;
+}
+const { product } = Astro.props;
+const subtitleColor = product.featured ? 'var(--cyan)' : 'var(--cobalt)';
+---
+<div class={`card${product.featured ? ' feature' : ''} reveal`}>
+  {product.flag && <span class="tag-flag">{product.flag}</span>}
+  <div class="ico">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={product.icon}></svg>
+  </div>
+  <h3>
+    {product.name}
+    {product.subtitle && <span style={`font-size:13px;font-weight:600;color:${subtitleColor}`}>{product.subtitle}</span>}
+  </h3>
+  <p>{product.description}</p>
+  {product.extra && <p style="font-size:13.5px;color:var(--ink);margin-bottom:14px" set:html={product.extra}></p>}
+  <ul class="feat">
+    {product.features.map((f) => <li>{f}</li>)}
+  </ul>
+</div>

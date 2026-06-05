@@ -1,0 +1,159 @@
+---
+// Book-a-demo modal. Opened by any element with the `.js-demo` class, site-wide.
+// Default behaviour: opens the visitor's email client with the details pre-filled
+// (no backend needed). To deliver straight to an inbox, swap the mailto block in
+// the script below for a Formspree/Web3Forms fetch — see the comment there.
+---
+<div class="modal-overlay" id="demoModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+    <button class="modal-close" id="demoClose" aria-label="Close">&times;</button>
+
+    <div id="demoFormWrap">
+      <div class="modal-head">
+        <span class="eyebrow">Book a demo</span>
+        <h3 id="demoTitle">See Corebalt in action</h3>
+        <p>Tell us about your business and we'll set up a tailored walkthrough of the right system for you.</p>
+      </div>
+      <form id="demoForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="f-name">Full name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Jane Wanjiru" />
+            <span class="err">Please enter your name.</span>
+          </div>
+          <div class="field">
+            <label for="f-email">Work email <span class="req">*</span></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="jane@company.co.ke" />
+            <span class="err">Enter a valid email address.</span>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+254 7XX XXX XXX" />
+            <span class="err">&mdash;</span>
+          </div>
+          <div class="field">
+            <label for="f-company">Company <span class="req">*</span></label>
+            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Your organization" />
+            <span class="err">Please enter your company.</span>
+          </div>
+          <div class="field full">
+            <label for="f-product">Which system interests you? <span class="req">*</span></label>
+            <select id="f-product" name="product">
+              <option value="" selected disabled>Select a product&hellip;</option>
+              <option>LenderFest &mdash; Loan Management</option>
+              <option>Corebalt POS</option>
+              <option>Corebalt ERP</option>
+              <option>Corebalt CRM</option>
+              <option>Data &amp; Analytics</option>
+              <option>Bespoke system</option>
+              <option>Not sure yet &mdash; advise me</option>
+            </select>
+            <span class="err">Please choose a product.</span>
+          </div>
+          <div class="field full">
+            <label for="f-size">Company size</label>
+            <select id="f-size" name="size">
+              <option value="" selected disabled>Select&hellip;</option>
+              <option>1&ndash;10</option><option>11&ndash;50</option><option>51&ndash;200</option><option>200+</option>
+            </select>
+            <span class="err">&mdash;</span>
+          </div>
+          <div class="field full">
+            <label for="f-msg">What would you like to achieve?</label>
+            <textarea id="f-msg" name="message" placeholder="A few words on what you're trying to run better&hellip;"></textarea>
+            <span class="err">&mdash;</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Request demo <span class="arrow">&rarr;</span></button>
+        <p class="form-note">We typically respond within one business day. Your details stay with Corebalt.</p>
+      </form>
+    </div>
+
+    <div class="modal-success" id="demoSuccess" hidden>
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h3>Thanks &mdash; request received</h3>
+      <p>Your email app should open with the details ready to send. If it doesn't, email us directly at <a href="mailto:info@corebalt.co.ke" style="color:var(--cobalt);font-weight:600">info@corebalt.co.ke</a> and we'll be in touch within one business day.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('demoModal')!;
+  const closeBtn = document.getElementById('demoClose')!;
+  const form = document.getElementById('demoForm') as HTMLFormElement;
+  const formWrap = document.getElementById('demoFormWrap')!;
+  const success = document.getElementById('demoSuccess')!;
+
+  function openModal(e?: Event) {
+    if (e) e.preventDefault();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('f-name')?.focus(), 140);
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.js-demo').forEach((b) => b.addEventListener('click', openModal));
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  // clear error styling as the user fixes a field
+  form.querySelectorAll('input,select,textarea').forEach((el) =>
+    el.addEventListener('input', () => el.closest('.field')?.classList.remove('invalid')));
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('f-name') as HTMLInputElement;
+    const email = document.getElementById('f-email') as HTMLInputElement;
+    const company = document.getElementById('f-company') as HTMLInputElement;
+    const product = document.getElementById('f-product') as HTMLSelectElement;
+    const phone = (document.getElementById('f-phone') as HTMLInputElement).value.trim();
+    const size = (document.getElementById('f-size') as HTMLSelectElement).value;
+    const msg = (document.getElementById('f-msg') as HTMLTextAreaElement).value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+
+    let valid = true;
+    let firstBad: HTMLElement | null = null;
+    ([
+      [name, name.value.trim() !== ''],
+      [email, emailOk],
+      [company, company.value.trim() !== ''],
+      [product, product.value !== ''],
+    ] as [HTMLElement, boolean][]).forEach(([el, ok]) => {
+      el.closest('.field')?.classList.toggle('invalid', !ok);
+      if (!ok) { valid = false; if (!firstBad) firstBad = el; }
+    });
+    if (!valid) { firstBad!.focus(); return; }
+
+    // --- Default: open the visitor's email client with everything pre-filled (no backend needed) ---
+    const subject = `Demo request — ${company.value.trim()} (${product.value})`;
+    const body = [
+      `Name: ${name.value.trim()}`,
+      `Email: ${email.value.trim()}`,
+      `Phone: ${phone || '—'}`,
+      `Company: ${company.value.trim()}`,
+      `Product interest: ${product.value}`,
+      `Company size: ${size || '—'}`,
+      ``, `Goals:`, msg || '—',
+    ].join('\n');
+    window.location.href = `mailto:info@corebalt.co.ke?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    /*  --- For real inbox delivery without an email-client step, use a form service. ---
+        1) Create a free form at https://formspree.io (or https://web3forms.com)
+        2) Replace the mailto block above with:
+           fetch('https://formspree.io/f/YOUR_FORM_ID', {
+             method: 'POST', headers: { Accept: 'application/json' },
+             body: new FormData(form),
+           });
+    */
+
+    formWrap.hidden = true;
+    success.hidden = false;
+  });
+</script>

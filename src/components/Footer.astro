@@ -1,0 +1,46 @@
+---
+import BrandMark from './BrandMark.astro';
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand"><span class="mark"><BrandMark /></span><span class="name">Corebalt</span></div>
+        <p>Nairobi-based software studio building loan management, POS, ERP, CRM, data analytics and bespoke systems for businesses across Kenya.</p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="/#products">LenderFest — LMS</a></li>
+          <li><a href="/#products">Corebalt POS</a></li>
+          <li><a href="/#products">Corebalt ERP</a></li>
+          <li><a href="/#products">Corebalt CRM</a></li>
+          <li><a href="/#products">Bespoke systems</a></li>
+          <li><a href="/#products">Data &amp; Analytics</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/#built">Why Corebalt</a></li>
+          <li><a href="/#process">How we work</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="mailto:info@corebalt.co.ke">info@corebalt.co.ke</a></li>
+          <li><a href="tel:+254700000000">+254 700 000 000</a></li>
+          <li><a href="#">Nairobi, Kenya</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© {year} Corebalt. All rights reserved.</span>
+      <span>Built in Nairobi 🇰🇪</span>
+    </div>
+  </div>
+</footer>

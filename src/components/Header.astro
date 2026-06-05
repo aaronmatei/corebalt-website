@@ -1,0 +1,20 @@
+---
+import BrandMark from './BrandMark.astro';
+// Nav links are absolute (/#anchor) so they also work from /blog and post pages.
+---
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="/" class="brand"><span class="mark"><BrandMark /></span><span class="name">Corebalt</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/#products">Products</a>
+      <a href="/#built">Why Corebalt</a>
+      <a href="/#process">How we work</a>
+      <a href="/blog">Blog</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-primary js-demo">Book a demo <span class="arrow">→</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>

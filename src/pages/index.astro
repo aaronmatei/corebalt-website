@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/products';
+---
+<BaseLayout>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Software studio · Nairobi, Kenya</span>
+        <h1>Systems that run<br /><span class="grad">your whole business.</span></h1>
+        <p class="lead">Corebalt builds and runs production-grade software for Kenyan companies — lending, retail, operations and customer growth — plus bespoke systems engineered around how you actually work.</p>
+        <div class="hero-cta">
+          <a href="#products" class="btn btn-primary">Explore our products <span class="arrow">→</span></a>
+          <a href="#" class="btn btn-ghost js-demo">Talk to us</a>
+        </div>
+        <div class="hero-chips">
+          <span class="chip"><b>M-Pesa</b> &amp; Daraja ready</span>
+          <span class="chip"><b>eTIMS</b> / KRA compliant</span>
+          <span class="chip">Local <b>support</b></span>
+        </div>
+      </div>
+
+      <div class="core-viz reveal">
+        <svg viewBox="0 0 400 400" aria-hidden="true">
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#4D8BFF" stop-opacity=".9" />
+              <stop offset="100%" stop-color="#4D8BFF" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <!-- pulsing halo -->
+          <circle cx="200" cy="200" r="46" fill="url(#glow)" class="pulse" />
+          <!-- orbits -->
+          <g fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.4">
+            <circle cx="200" cy="200" r="92" />
+            <circle cx="200" cy="200" r="150" />
+          </g>
+          <!-- connecting lines to nodes -->
+          <g stroke="rgba(120,170,255,.45)" stroke-width="1.6">
+            <line x1="200" y1="200" x2="200" y2="108" />
+            <line x1="200" y1="200" x2="120" y2="246" />
+            <line x1="200" y1="200" x2="280" y2="246" />
+            <line x1="200" y1="200" x2="322" y2="150" />
+            <line x1="200" y1="200" x2="78" y2="150" />
+          </g>
+          <!-- rotating outer nodes -->
+          <g class="spin">
+            <circle cx="200" cy="50" r="6" fill="#5FB8FF" />
+            <circle cx="350" cy="280" r="5" fill="#fff" />
+            <circle cx="60" cy="300" r="5" fill="#fff" />
+          </g>
+          <!-- product nodes -->
+          <g>
+            <circle cx="200" cy="108" r="22" fill="#0E2A5C" stroke="#4D8BFF" stroke-width="1.6" />
+            <text x="200" y="112" text-anchor="middle" class="node-lbl">LMS</text>
+            <circle cx="120" cy="246" r="22" fill="#0E2A5C" stroke="#4D8BFF" stroke-width="1.6" />
+            <text x="120" y="250" text-anchor="middle" class="node-lbl">POS</text>
+            <circle cx="280" cy="246" r="22" fill="#0E2A5C" stroke="#4D8BFF" stroke-width="1.6" />
+            <text x="280" y="250" text-anchor="middle" class="node-lbl">ERP</text>
+            <circle cx="322" cy="150" r="20" fill="#0E2A5C" stroke="#4D8BFF" stroke-width="1.6" />
+            <text x="322" y="154" text-anchor="middle" class="node-lbl">CRM</text>
+            <circle cx="78" cy="150" r="20" fill="#0E2A5C" stroke="#4D8BFF" stroke-width="1.6" />
+            <text x="78" y="154" text-anchor="middle" class="node-lbl">API</text>
+          </g>
+          <!-- core -->
+          <circle cx="200" cy="200" r="30" fill="#0B1F44" stroke="#4D8BFF" stroke-width="2" />
+          <circle cx="200" cy="200" r="13" fill="#4D8BFF" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <div class="stats">
+    <div class="wrap stats-grid">
+      <div class="stat reveal"><div class="num">6+</div><div class="lbl">Core platforms</div></div>
+      <div class="stat reveal"><div class="num">100%</div><div class="lbl">Kenyan-built &amp; supported</div></div>
+      <div class="stat reveal"><div class="num">M-Pesa</div><div class="lbl">Payments integrated</div></div>
+      <div class="stat reveal"><div class="num">24/7</div><div class="lbl">System monitoring</div></div>
+    </div>
+  </div>
+
+  <!-- ========== PRODUCTS ========== -->
+  <section id="products">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Our products</span>
+        <h2>Ready-to-run software, built around the core.</h2>
+        <p>Deploy a proven Corebalt platform out of the box, or have us tailor it to your processes. Everything speaks the same language and shares one secure core.</p>
+      </div>
+
+      <div class="prod-grid">
+        {products.map((product) => <ProductCard product={product} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHY / BUILT FOR KENYA ========== -->
+  <section id="built">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Why Corebalt</span>
+        <h2>Engineered for how Kenya does business.</h2>
+        <p>Local payments, local compliance, local support — built in from day one, not bolted on later.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="fcard reveal">
+          <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h20v10H2zM2 11h20M6 15h4"/></svg></div>
+          <h3>M-Pesa &amp; Daraja</h3>
+          <p>STK push, C2B, B2C and reconciliation are native across every product — money moves the way your customers expect.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></div>
+          <h3>KRA &amp; CBK compliance</h3>
+          <p>eTIMS e-invoicing, VAT and lending reporting aligned to Kenyan regulation, so audits and licensing stay straightforward.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2c3 3 3 17 0 20M12 2c-3 3-3 17 0 20"/></svg></div>
+          <h3>People you can reach</h3>
+          <p>A Nairobi-based team that answers the phone — onboarding, training and support in your timezone, in your language.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>One connected core</h3>
+          <p>POS, ERP, CRM and LenderFest share data and identity — no duplicate entry, no silos, one view of your business.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+          <h3>Secure by design</h3>
+          <p>Role-based access, encryption and audit trails as standard — your data and your customers' data, protected.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18M5 7l14 10M19 7L5 17"/></svg></div>
+          <h3>Built to scale</h3>
+          <p>Cloud-hosted and load-tested, from a single branch to nationwide operations — your systems grow as you do.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROCESS ========== -->
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How we work</span>
+        <h2>From conversation to production.</h2>
+        <p>A clear, collaborative path — whether you're adopting a product or commissioning something bespoke.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="n">1</div><h3>Discover</h3><p>We map your processes, goals and constraints to recommend the right fit — product, custom, or a blend.</p></div>
+        <div class="step reveal"><div class="n">2</div><h3>Design</h3><p>We prototype the solution and agree scope, timeline and integrations before a line of production code is written.</p></div>
+        <div class="step reveal"><div class="n">3</div><h3>Build &amp; deploy</h3><p>We configure, build and migrate your data, then launch with training so your team is confident from day one.</p></div>
+        <div class="step reveal"><div class="n">4</div><h3>Support &amp; grow</h3><p>We monitor, maintain and improve — adding features as your business evolves, with support that's a call away.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section id="contact" style="padding-top:20px">
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2>Let's build your core.</h2>
+        <p>Tell us what you're trying to run better. We'll show you the fastest path to a system that fits.</p>
+        <a href="#" class="btn btn-primary js-demo">Book a demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

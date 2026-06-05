@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactModal from '../components/ContactModal.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Corebalt — Software built for Kenyan business',
+  description = 'Corebalt is a Nairobi-based software company building loan management (LenderFest), POS, ERP, CRM, data analytics and bespoke systems for businesses across Kenya.',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <Header />
+  <slot />
+  <Footer />
+  <ContactModal />
+
+  <script>
+    // ---- sticky nav ----
+    const hdr = document.getElementById('hdr')!;
+    const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 30);
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+
+    // ---- mobile menu ----
+    const menuBtn = document.getElementById('menuBtn')!;
+    const navLinks = document.getElementById('navLinks')!;
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // ---- reveal on scroll ----
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const el = e.target as HTMLElement;
+          el.style.transitionDelay = (el.dataset.d || 0) + 'ms';
+          el.classList.add('in');
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll<HTMLElement>('.reveal').forEach((el, i) => {
+      el.dataset.d = String((i % 4) * 70);
+      io.observe(el);
+    });
+  </script>
+</body>
+</html>
