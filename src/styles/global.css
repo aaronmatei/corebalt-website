@@ -21,6 +21,10 @@ a{text-decoration:none;color:inherit}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 .eyebrow{font-family:"Sora",sans-serif;font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--cobalt)}
 
+/* ---------- wordmark (node icon as the "o") ---------- */
+.wordmark{display:inline-flex;align-items:center;font-family:"Sora",sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1;color:#fff;white-space:nowrap}
+.wordmark .wm-o{width:.92em;height:.92em;flex:none;margin:0 -.05em;position:relative;top:.015em}
+
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:9px;font-family:"Sora",sans-serif;font-weight:700;font-size:15px;
   padding:14px 26px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:.25s;white-space:nowrap}

@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = 'Corebalt — Software built for Kenyan business',
-  description = 'Corebalt is a Nairobi-based software company building loan management (LenderFest), POS, ERP, CRM, data analytics and bespoke systems for businesses across Kenya.',
+  title = 'Corebalt — Software that runs your whole business',
+  description = 'Corebalt is a software studio building loan management (LenderFest), POS, ERP, CRM, data analytics and bespoke systems for businesses worldwide — with deep local-payments and compliance expertise rooted in Nairobi.',
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -21,6 +21,7 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
