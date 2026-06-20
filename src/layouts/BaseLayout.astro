@@ -7,12 +7,48 @@ import ContactModal from '../components/ContactModal.astro';
 interface Props {
   title?: string;
   description?: string;
+  /** social share image (path resolved against the site origin) */
+  image?: string;
+  /** og:type — "website" for normal pages, "article" for blog posts */
+  type?: 'website' | 'article';
+  /** ISO date, articles only */
+  publishedTime?: string;
+  author?: string;
 }
 
 const {
   title = 'Corebalt — Software that runs your whole business',
   description = 'Corebalt is a software studio building loan management (LenderFest), POS, ERP, CRM, data analytics and bespoke systems for businesses worldwide — with deep local-payments and compliance expertise rooted in Nairobi.',
+  image = '/og-image.png',
+  type = 'website',
+  publishedTime,
+  author = 'Corebalt',
 } = Astro.props;
+
+const siteName = 'Corebalt';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Corebalt',
+  url: 'https://corebalt.co.ke',
+  logo: 'https://corebalt.co.ke/favicon.svg',
+  image: 'https://corebalt.co.ke/og-image.png',
+  description:
+    'Software studio building loan management (LenderFest), POS, ERP, CRM, data analytics and bespoke systems for businesses worldwide.',
+  email: 'info@corebalt.co.ke',
+  telephone: '+254719222274',
+  address: { '@type': 'PostalAddress', addressLocality: 'Nairobi', addressCountry: 'KE' },
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Corebalt',
+  url: 'https://corebalt.co.ke',
+};
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -21,8 +57,37 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0B1F44" />
+  <meta name="generator" content={Astro.generator} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  <link rel="canonical" href={canonical} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content={type} />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  {type === 'article' && publishedTime && (
+    <meta property="article:published_time" content={publishedTime} />
+  )}
+  {type === 'article' && <meta property="article:author" content={author} />}
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- Structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />

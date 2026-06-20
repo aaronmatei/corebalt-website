@@ -12,8 +12,31 @@ const { Content } = await render(post);
 
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  author: { '@type': 'Organization', name: post.data.author },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Corebalt',
+    logo: { '@type': 'ImageObject', url: 'https://corebalt.co.ke/favicon.svg' },
+  },
+  image: 'https://corebalt.co.ke/og-image.png',
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+};
 ---
-<BaseLayout title={`${post.data.title} — Corebalt`} description={post.data.description}>
+<BaseLayout
+  title={`${post.data.title} — Corebalt`}
+  description={post.data.description}
+  type="article"
+  publishedTime={post.data.date.toISOString()}
+  author={post.data.author}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <article class="article">
     <a class="back-link" href="/blog">← All posts</a>
     <span class="date">{fmt(post.data.date)} · {post.data.author}</span>
