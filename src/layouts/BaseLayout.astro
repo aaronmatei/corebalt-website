@@ -28,17 +28,40 @@ const {
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <div class="scroll-progress" id="scrollBar"></div>
   <Header />
   <slot />
   <Footer />
   <ContactModal />
 
   <script>
-    // ---- sticky nav ----
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- sticky nav + scroll progress bar + parallax (one passive handler) ----
     const hdr = document.getElementById('hdr')!;
-    const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 30);
+    const bar = document.getElementById('scrollBar')!;
+    const parEls = [...document.querySelectorAll<HTMLElement>('[data-parallax]')];
+
+    const onScroll = () => {
+      hdr.classList.toggle('scrolled', window.scrollY > 30);
+
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      bar.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + '%';
+
+      if (!reduce) {
+        const vh = window.innerHeight;
+        for (const el of parEls) {
+          const speed = parseFloat(el.dataset.parallax || '0');
+          const r = el.getBoundingClientRect();
+          const fromMid = r.top + r.height / 2 - vh / 2;
+          el.style.setProperty('--par', (-fromMid * speed).toFixed(1) + 'px');
+        }
+      }
+    };
     onScroll();
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
 
     // ---- mobile menu ----
     const menuBtn = document.getElementById('menuBtn')!;
@@ -47,19 +70,22 @@ const {
     navLinks.querySelectorAll('a').forEach((a) =>
       a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-    // ---- reveal on scroll ----
+    // ---- reveal on scroll, staggered per grid ----
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
           const el = e.target as HTMLElement;
-          el.style.transitionDelay = (el.dataset.d || 0) + 'ms';
+          el.style.transitionDelay = (el.dataset.d || '0') + 'ms';
           el.classList.add('in');
           io.unobserve(el);
         }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll<HTMLElement>('.reveal').forEach((el, i) => {
-      el.dataset.d = String((i % 4) * 70);
+    document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
+      const sibs = el.parentElement
+        ? [...el.parentElement.children].filter((c) => c.classList.contains('reveal'))
+        : [el];
+      el.dataset.d = String(sibs.indexOf(el) * 90);
       io.observe(el);
     });
   </script>

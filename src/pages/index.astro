@@ -6,10 +6,10 @@ import { products } from '../data/products';
 <BaseLayout>
 
   <!-- ========== HERO ========== -->
-  <section class="hero">
-    <div class="grid-bg"></div>
+  <section class="hero" data-parallax="0.06">
+    <div class="grid-bg" data-parallax="0.12"></div>
     <div class="wrap hero-grid">
-      <div class="reveal">
+      <div class="reveal" data-reveal="left">
         <h1>Systems that run<br /><span class="grad">your whole business.</span></h1>
         <p class="lead">Corebalt builds and runs production-grade software for companies worldwide — lending, retail, operations and customer growth — plus bespoke systems engineered around how you actually work.</p>
         <div class="hero-cta">
@@ -23,7 +23,7 @@ import { products } from '../data/products';
         </div>
       </div>
 
-      <div class="core-viz reveal">
+      <div class="core-viz reveal" data-reveal="right">
         <svg viewBox="0 0 400 400" aria-hidden="true">
           <defs>
             <radialGradient id="glow" cx="50%" cy="50%" r="50%">
@@ -94,7 +94,7 @@ import { products } from '../data/products';
   <!-- ========== PRODUCTS ========== -->
   <section id="products">
     <div class="wrap">
-      <div class="sec-head reveal">
+      <div class="sec-head reveal" data-reveal="left">
         <span class="eyebrow">Our products</span>
         <h2>Ready-to-run software, built around the core.</h2>
         <p>Deploy a proven Corebalt platform out of the box, or have us tailor it to your processes. Everything speaks the same language and shares one secure core.</p>
@@ -107,9 +107,9 @@ import { products } from '../data/products';
   </section>
 
   <!-- ========== WHY / BUILT FOR KENYA ========== -->
-  <section id="built">
+  <section id="built" data-parallax="0.08">
     <div class="wrap">
-      <div class="sec-head reveal">
+      <div class="sec-head reveal" data-reveal="left">
         <span class="eyebrow">Why Corebalt</span>
         <h2>Global reach, with local expertise built in.</h2>
         <p>Local payments, real compliance and support that answers — wherever you operate. Built in from day one, not bolted on later.</p>
@@ -152,7 +152,7 @@ import { products } from '../data/products';
   <!-- ========== PROCESS ========== -->
   <section id="process">
     <div class="wrap">
-      <div class="sec-head reveal">
+      <div class="sec-head reveal" data-reveal="left">
         <span class="eyebrow">How we work</span>
         <h2>From conversation to production.</h2>
         <p>A clear, collaborative path — whether you're adopting a product or commissioning something bespoke.</p>
@@ -169,7 +169,7 @@ import { products } from '../data/products';
   <!-- ========== CTA ========== -->
   <section id="contact" style="padding-top:20px">
     <div class="wrap">
-      <div class="cta reveal">
+      <div class="cta reveal" data-reveal="scale">
         <h2>Let's build your core.</h2>
         <p>Tell us what you're trying to run better. We'll show you the fastest path to a system that fits.</p>
         <a href="#" class="btn btn-primary js-demo">Book a demo <span class="arrow">→</span></a>
