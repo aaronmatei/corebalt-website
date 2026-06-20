@@ -46,6 +46,14 @@ import { products } from '../data/products';
             <line x1="200" y1="200" x2="322" y2="150" />
             <line x1="200" y1="200" x2="78" y2="150" />
           </g>
+          <!-- animated data-flow pulses from the core out to each node -->
+          <g class="flows">
+            <line x1="200" y1="200" x2="200" y2="108" pathLength="100" class="flow" style="animation-delay:0s" />
+            <line x1="200" y1="200" x2="120" y2="246" pathLength="100" class="flow" style="animation-delay:.5s" />
+            <line x1="200" y1="200" x2="280" y2="246" pathLength="100" class="flow" style="animation-delay:1s" />
+            <line x1="200" y1="200" x2="322" y2="150" pathLength="100" class="flow" style="animation-delay:1.5s" />
+            <line x1="200" y1="200" x2="78" y2="150" pathLength="100" class="flow" style="animation-delay:2s" />
+          </g>
           <!-- rotating outer nodes -->
           <g class="spin">
             <circle cx="200" cy="50" r="6" fill="#5FB8FF" />
@@ -76,8 +84,8 @@ import { products } from '../data/products';
   <!-- ========== STATS ========== -->
   <div class="stats">
     <div class="wrap stats-grid">
-      <div class="stat reveal"><div class="num">6+</div><div class="lbl">Core platforms</div></div>
-      <div class="stat reveal"><div class="num">100%</div><div class="lbl">Built &amp; supported in-house</div></div>
+      <div class="stat reveal"><div class="num" data-count="6" data-suffix="+">6+</div><div class="lbl">Core platforms</div></div>
+      <div class="stat reveal"><div class="num" data-count="100" data-suffix="%">100%</div><div class="lbl">Built &amp; supported in-house</div></div>
       <div class="stat reveal"><div class="num">M-Pesa</div><div class="lbl">&amp; global payments integrated</div></div>
       <div class="stat reveal"><div class="num">24/7</div><div class="lbl">System monitoring</div></div>
     </div>
@@ -168,5 +176,35 @@ import { products } from '../data/products';
       </div>
     </div>
   </section>
+
+  <script>
+    // Count-up animation for the stat numbers when they scroll into view.
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nums = document.querySelectorAll<HTMLElement>('.stat .num[data-count]');
+
+    const run = (el: HTMLElement) => {
+      const target = parseFloat(el.dataset.count || '0');
+      const suffix = el.dataset.suffix || '';
+      if (reduce) { el.textContent = target + suffix; return; }
+      const dur = 1400;
+      let start: number | undefined;
+      const step = (t: number) => {
+        if (start === undefined) start = t;
+        const p = Math.min((t - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        el.textContent = Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    nums.forEach((n) => (n.textContent = '0' + (n.dataset.suffix || '')));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { run(e.target as HTMLElement); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    nums.forEach((n) => io.observe(n));
+  </script>
 
 </BaseLayout>
