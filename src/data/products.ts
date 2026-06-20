@@ -12,6 +12,8 @@ export interface Product {
   features: string[];
   /** inner SVG markup for the 24x24 line icon */
   icon: string;
+  /** external landing page / app URL, if the product has one */
+  url?: string;
 }
 
 export const products: Product[] = [
@@ -24,6 +26,7 @@ export const products: Product[] = [
       'End-to-end loan management — origination, scoring, disbursement, repayments and collections — with M-Pesa STK push and CBK-aligned reporting for digital lenders, SACCOs and microfinance.',
     features: ['Loan origination', 'M-Pesa repayments', 'Collections', 'Credit scoring'],
     icon: '<path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/><circle cx="12" cy="11" r="1.5"/>',
+    url: 'https://www.lenderfest.loans',
   },
   {
     name: 'Corebalt POS',
@@ -38,6 +41,7 @@ export const products: Product[] = [
       'Run finance, HR, payroll, procurement and inventory in one connected system — with real-time dashboards that give leadership a single source of truth.',
     features: ['Accounting', 'Payroll', 'Procurement', 'Reporting'],
     icon: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+    url: 'https://erp.corebalt.co.ke',
   },
   {
     name: 'Corebalt CRM',
@@ -45,6 +49,7 @@ export const products: Product[] = [
       'Capture every lead, automate follow-ups over SMS and WhatsApp, and see your full sales pipeline so your team closes more and churns less.',
     features: ['Pipelines', 'SMS / WhatsApp', 'Automation', 'Analytics'],
     icon: '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 7l2 2 4-4"/>',
+    url: 'https://erp.corebalt.co.ke',
   },
   {
     name: 'Bespoke systems',

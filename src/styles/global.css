@@ -114,6 +114,10 @@ section{padding:96px 0}
 .card.feature .ico{background:rgba(255,255,255,.12)}
 .card.feature .ico svg{stroke:var(--cyan)}
 .card.feature .feat li{color:var(--cyan);background:rgba(95,184,255,.14)}
+.card-link{display:inline-flex;align-items:center;gap:7px;margin-top:18px;font-family:"Sora",sans-serif;font-weight:700;font-size:14px;color:var(--cobalt)}
+.card-link .arrow{transition:transform .25s}
+.card-link:hover .arrow{transform:translateX(3px)}
+.card.feature .card-link{color:var(--cyan)}
 
 /* kenya / features */
 #built{background:var(--navy);color:#fff;position:relative;overflow:hidden}

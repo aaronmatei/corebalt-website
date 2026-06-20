@@ -21,4 +21,9 @@ const subtitleColor = product.featured ? 'var(--cyan)' : 'var(--cobalt)';
   <ul class="feat">
     {product.features.map((f) => <li>{f}</li>)}
   </ul>
+  {product.url && (
+    <a class="card-link" href={product.url} target="_blank" rel="noopener noreferrer">
+      Visit {product.name} <span class="arrow">→</span>
+    </a>
+  )}
 </div>
